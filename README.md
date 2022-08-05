@@ -1,2 +1,2 @@
-# SkillStormProject1
-Flight service application
+# Project1
+SkillStorm project 1: Flight service application
