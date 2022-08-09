@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using FlightServiceAPI.Data;
+
 namespace FlightServiceAPI
 {
     public class Program
@@ -6,6 +9,11 @@ namespace FlightServiceAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<FSContext>(options => {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             // Add services to the container.
 
             builder.Services.AddControllers();

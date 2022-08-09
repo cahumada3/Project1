@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\A\\source\\repos\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj": {}
+    "C:\\Users\\A\\source\\repos\\Project1\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\A\\source\\repos\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj": {
+    "C:\\Users\\A\\source\\repos\\Project1\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\A\\source\\repos\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj",
+        "projectUniqueName": "C:\\Users\\A\\source\\repos\\Project1\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj",
         "projectName": "FlightServiceAPI",
-        "projectPath": "C:\\Users\\A\\source\\repos\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj",
+        "projectPath": "C:\\Users\\A\\source\\repos\\Project1\\FlightServiceAPI\\FlightServiceAPI\\FlightServiceAPI.csproj",
         "packagesPath": "C:\\Users\\A\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\A\\source\\repos\\FlightServiceAPI\\FlightServiceAPI\\obj\\",
+        "outputPath": "C:\\Users\\A\\source\\repos\\Project1\\FlightServiceAPI\\FlightServiceAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\A\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,6 +61,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.7, )"
             },
