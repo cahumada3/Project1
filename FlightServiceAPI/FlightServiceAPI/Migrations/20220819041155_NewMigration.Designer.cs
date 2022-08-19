@@ -3,6 +3,7 @@ using FlightServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightServiceAPI.Migrations
 {
     [DbContext(typeof(FSContext))]
-    partial class FSContextModelSnapshot : ModelSnapshot
+    [Migration("20220819041155_NewMigration")]
+    partial class NewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +44,10 @@ namespace FlightServiceAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BoardingTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConfirmationNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using FlightServiceAPI.Data;
+using Microsoft.AspNetCore.Http.Json;
 
 namespace FlightServiceAPI
 {
@@ -8,6 +9,24 @@ namespace FlightServiceAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<JsonOptions>(options =>
+            {
+                options.SerializerOptions.AllowTrailingCommas = true;
+                options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            });
+            
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin();
+                        policy.AllowAnyMethod();
+                        policy.AllowAnyHeader();
+                    });
+            });
 
             builder.Services.AddDbContext<FSContext>(options => {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -32,8 +51,16 @@ namespace FlightServiceAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("AllowAll");
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                await next();
+            });
+
+            app.UseAuthorization();
 
             app.MapControllers();
 

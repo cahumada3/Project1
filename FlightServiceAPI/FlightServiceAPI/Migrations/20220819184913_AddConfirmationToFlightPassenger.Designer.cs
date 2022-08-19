@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightServiceAPI.Migrations
 {
     [DbContext(typeof(FSContext))]
-    [Migration("20220809001728_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220819184913_AddConfirmationToFlightPassenger")]
+    partial class AddConfirmationToFlightPassenger
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,47 +22,6 @@ namespace FlightServiceAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("FlightPassenger", b =>
-                {
-                    b.Property<int>("FlightsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PassengersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FlightsId", "PassengersId");
-
-                    b.HasIndex("PassengersId");
-
-                    b.ToTable("FlightPassenger");
-                });
-
-            modelBuilder.Entity("FlightServiceAPI.Models.BookedFlight", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PassengerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("RoundTrip")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FlightId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("BookedFlight");
-                });
 
             modelBuilder.Entity("FlightServiceAPI.Models.Flight", b =>
                 {
@@ -84,8 +43,9 @@ namespace FlightServiceAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BoardingTime")
-                        .HasColumnType("int");
+                    b.Property<string>("BoardingTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DepartureDate")
                         .IsRequired()
@@ -109,6 +69,33 @@ namespace FlightServiceAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("FlightServiceAPI.Models.FlightPassenger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ConfirmationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightId");
+
+                    b.HasIndex("PassengerId");
+
+                    b.ToTable("FlightPassengers");
                 });
 
             modelBuilder.Entity("FlightServiceAPI.Models.Passenger", b =>
@@ -136,31 +123,16 @@ namespace FlightServiceAPI.Migrations
                     b.ToTable("Passengers");
                 });
 
-            modelBuilder.Entity("FlightPassenger", b =>
-                {
-                    b.HasOne("FlightServiceAPI.Models.Flight", null)
-                        .WithMany()
-                        .HasForeignKey("FlightsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FlightServiceAPI.Models.Passenger", null)
-                        .WithMany()
-                        .HasForeignKey("PassengersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FlightServiceAPI.Models.BookedFlight", b =>
+            modelBuilder.Entity("FlightServiceAPI.Models.FlightPassenger", b =>
                 {
                     b.HasOne("FlightServiceAPI.Models.Flight", "Flight")
-                        .WithMany("BookedFlights")
+                        .WithMany("FlightPassengers")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FlightServiceAPI.Models.Passenger", "Passenger")
-                        .WithMany("BookedFlights")
+                        .WithMany("FlightPassengers")
                         .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -172,12 +144,12 @@ namespace FlightServiceAPI.Migrations
 
             modelBuilder.Entity("FlightServiceAPI.Models.Flight", b =>
                 {
-                    b.Navigation("BookedFlights");
+                    b.Navigation("FlightPassengers");
                 });
 
             modelBuilder.Entity("FlightServiceAPI.Models.Passenger", b =>
                 {
-                    b.Navigation("BookedFlights");
+                    b.Navigation("FlightPassengers");
                 });
 #pragma warning restore 612, 618
         }

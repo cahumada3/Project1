@@ -1,4 +1,6 @@
-﻿namespace FlightServiceAPI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FlightServiceAPI.Models
 {
     public class Passenger
     {
@@ -9,8 +11,8 @@
 
 
         // Navigation Properties
-        // JOIN entities
-        public virtual ICollection<Flight> Flights { get; set; }
-        public virtual ICollection<BookedFlight> BookedFlights { get; set; }
+        // JOIN entity
+        public virtual ICollection<FlightPassenger> FlightPassengers { get; set; }
+
     }
 }

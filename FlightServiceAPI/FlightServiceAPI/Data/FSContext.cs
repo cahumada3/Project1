@@ -13,22 +13,39 @@ namespace FlightServiceAPI.Data
 
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<Flight> Flights { get; set; }
+        public DbSet<FlightPassenger> FlightPassengers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.Entity<BookedFlight>(e =>
+            builder.Entity<FlightPassenger>(e =>
             {
-                e.HasKey(bf => bf.Id);
+                e.HasKey(fp => fp.Id);
 
-                e.HasOne(bf => bf.Passenger)
-                .WithMany(p => p.BookedFlights)
-                .HasForeignKey(bf => bf.PassengerId);
+                e.HasOne(fp => fp.Passenger)
+                .WithMany(p => p.FlightPassengers)
+                .HasForeignKey(fp => fp.PassengerId);
 
                 e.HasOne(bf => bf.Flight)
-                .WithMany(f => f.BookedFlights)
+                .WithMany(f => f.FlightPassengers)
                 .HasForeignKey(bf => bf.FlightId);
             });
+
+            //builder.Entity<FlightPassenger>(e =>
+            //{
+            //    e.HasKey(fp => fp.Id);
+
+            //    e.HasOne(fp => fp.Passenger)
+            //    .WithMany(p => p.FlightPassengers)
+            //    .HasForeignKey(fp => fp.PassengerId);
+
+            //    e.HasOne(bf => bf.Flight)
+            //    .WithMany(f => f.FlightPassengers)
+            //    .HasForeignKey(bf => bf.FlightId);
+            //});
+
+
+
         }
     }
 }
